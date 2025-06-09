@@ -5,6 +5,9 @@
 
 :root {
   --background-light-gray: rgb(246, 246, 246);
+  --background-light-gray-2: rgb(236, 236, 236);
+  --background-light-green: rgb(100, 201, 100);
+  --background-light-red: rgb(253, 86, 95);
   --background-white: #fff;
 }
 
