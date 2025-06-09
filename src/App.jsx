@@ -1,23 +1,33 @@
-import { createContext, useReducer, useRef } from "react";
+import { useReducer, useRef } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import New from "./pages/New";
 import Diary from "./pages/Diary";
 import Edit from "./pages/Edit";
 import NotFound from "./pages/NotFound";
+import {
+  DiaryDispatchContext,
+  DiaryStateContext,
+} from "./contexts/DiaryContext";
 
 const mockData = [
   {
     id: 1,
-    createDate: new Date().getTime(),
+    createdDate: new Date("2025-06-13").getTime(),
     emotionId: 1,
     content: "청소하기",
   },
   {
     id: 2,
-    createDate: new Date().getTime(),
+    createdDate: new Date("2025-06-14").getTime(),
     emotionId: 3,
     content: "빨래하기",
+  },
+  {
+    id: 3,
+    createdDate: new Date("2025-05-29").getTime(),
+    emotionId: 3,
+    content: "운동하기",
   },
 ];
 
@@ -36,32 +46,29 @@ const reducer = (state, action) => {
   }
 };
 
-const DiaryStateContext = createContext();
-const DiaryDispatchContext = createContext();
-
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3);
 
   // 일기 추가
-  const onCreate = (createDate, emotionId, content) => {
+  const onCreate = (createdDate, emotionId, content) => {
     dispatch({
       type: "CREATE",
       data: {
         id: idRef.current++,
-        createDate,
+        createdDate,
         emotionId,
         content,
       },
     });
   };
   // 일기 수정
-  const onUpdate = (id, createDate, emotionId, content) => {
+  const onUpdate = (id, createdDate, emotionId, content) => {
     dispatch({
       type: "UPDATE",
       data: {
         id,
-        createDate,
+        createdDate,
         emotionId,
         content,
       },
@@ -77,8 +84,8 @@ function App() {
 
   return (
     <>
-      <DiaryStateContext value={data}>
-        <DiaryDispatchContext value={{ onCreate, onUpdate, onDelete }}>
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/new" element={<New />} />
@@ -86,8 +93,8 @@ function App() {
             <Route path="/edit/:id" element={<Edit />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </DiaryDispatchContext>
-      </DiaryStateContext>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
     </>
   );
 }
