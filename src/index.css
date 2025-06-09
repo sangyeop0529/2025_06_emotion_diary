@@ -24,7 +24,7 @@ body {
 }
 
 #root {
-  background-color: var(--background-white);
+  background-color: #fff;
   max-width: 600px;
   width: 100%;
   min-height: 100vh;

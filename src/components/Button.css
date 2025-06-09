@@ -10,10 +10,10 @@
 
 .Button_POSITIVE {
   background-color: var(--background-light-green);
-  color: var(--background-white);
+  color: #fff;
 }
 
 .Button_NEGATIVE {
   background-color: var(--background-light-red);
-  color: var(--background-white);
+  color: #fff;
 }
